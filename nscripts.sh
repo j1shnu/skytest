@@ -6,13 +6,13 @@
 
 yad_ip()
 {
-	ipt=$(yad --width=400 --height=200 --center --title="Network Manager"  --text="<span color='blue' font='Serif Bold 14'>Posibolt Network Setup\n</span>" --text-align=center --form --field='<span color="red" font="11">'"<b>Enter a valid IP ADDRESS: </b></span>:\n" --field="                                                              <b>  Example: 192.168.0.24/24</b>":LBL)
+	ipt=$(yad --width=400 --height=200 --center --title="Network Manager"  --text="<span color='blue' font='Serif Bold 14'>Company Network Setup\n</span>" --text-align=center --form --field='<span color="red" font="11">'"<b>Enter a valid IP ADDRESS: </b></span>:\n" --field="                                                              <b>  Example: 192.168.0.24/24</b>":LBL)
 	ip=$(awk -F '|' '{print $1}'<<<$ipt)
 }
 
 yad_gw()
 {
-	ipt=$(yad --width=400 --height=200 --center --title="Network Manager"  --text="<span color='blue' font='Serif Bold 14'>Posibolt Network Setup\n</span>" --text-align=center --form --field='<span color="orange" font="11">'"<b>Enter a valid Gateway IP: </b></span>:\n" --field="                                                              <b>  Example: 192.168.0.2</b>":LBL)
+	ipt=$(yad --width=400 --height=200 --center --title="Network Manager"  --text="<span color='blue' font='Serif Bold 14'>Company Network Setup\n</span>" --text-align=center --form --field='<span color="orange" font="11">'"<b>Enter a valid Gateway IP: </b></span>:\n" --field="                                                              <b>  Example: 192.168.0.2</b>":LBL)
 	gw=$(awk -F '|' '{print $1}'<<<$ipt)
 }
 
@@ -269,7 +269,7 @@ gwcheck()
 
 start()
 {
-	ipt=$(yad --width=500 --height=300  --text="<span color='blue' font='Serif Bold 15'>Posibolt Network Setup</span>" --text-align=center --title="Network Manager" --image=/home/jishnu/Documents/backups/logo1.jpg  --form --field="<span font='10'><b>Enter IP Address:</b></span>":\n  --field="                                                             Example: 192.168.0.10/24":LBL --field="<span font='10'> <b>Enter Gateway IP Address</b></span>": --button=OK:0  --field="                                                             Example: 192.168.0.2":LBL)
+	ipt=$(yad --width=500 --height=300  --text="<span color='blue' font='Serif Bold 15'>Company Network Setup</span>" --text-align=center --title="Network Manager" --image=/home/jishnu/Documents/backups/logo1.jpg  --form --field="<span font='10'><b>Enter IP Address:</b></span>":\n  --field="                                                             Example: 192.168.0.10/24":LBL --field="<span font='10'> <b>Enter Gateway IP Address</b></span>": --button=OK:0  --field="                                                             Example: 192.168.0.2":LBL)
 	ip=$(awk -F "|" '{print $1}'<<<$ipt)
 	gw=$(awk -F "|" '{print $3}'<<<$ipt)
 	echo $gw
@@ -284,13 +284,13 @@ start()
 	GW4=$gw
 	sudo hostnamectl set-hostname $host
 	sudo  sed -i "/127.0.0.1/ s/$/ $host/g" /etc/hosts
-	sudo nmcli connection delete Posibolt
-	sudo nmcli connection add con-name "Posibolt" ifname $ifname type ethernet autoconnect yes ip4 $IPV4 gw4 $GW4
-	sudo nmcli connection up Posibolt
+	sudo nmcli connection delete Company
+	sudo nmcli connection add con-name "Company" ifname $ifname type ethernet autoconnect yes ip4 $IPV4 gw4 $GW4
+	sudo nmcli connection up Company
 	sudo systemctl reload NetworkManager.service
 }
 
-yd=$(yad --width=400 --height=200 --text="<span color='blue' font='Serif Bold 15'>Posibolt Network Setup\n</span>" --text-align=center --title="Network Manager"  --form --field="<b>Select Network Type</b>:":CB"" ""'Dynamic!Static' --field="<b>Enter Hostname</b>:")
+yd=$(yad --width=400 --height=200 --text="<span color='blue' font='Serif Bold 15'>Company Network Setup\n</span>" --text-align=center --title="Network Manager"  --form --field="<b>Select Network Type</b>:":CB"" ""'Dynamic!Static' --field="<b>Enter Hostname</b>:")
 #echo $yd
 type=$(awk -F "|" '{print $1}'<<<$yd)
 host=$(awk -F "|" '{print $2}'<<<$yd)
