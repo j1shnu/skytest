@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# YOU MUST INSTALL YAD FIRST
+
 ##############YAD WINDOW############
 
 yad_ip()
