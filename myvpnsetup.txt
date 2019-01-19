@@ -1,0 +1,91 @@
+#install openvpn and easy-rsa
+# cp -rf /usr/share/easy-rsa/2.0/* /etc/openvpn/easy-rsa
+#source ./vars
+#if there is no vars. Then Follow below steps
+
+#####SERVER####
+#cd /etc/openvpn/easyrsa/
+# ./easyrsa init-pki
+# ./easyrsa build-ca
+# ./easyrsa gen-req server nopass
+# ./easyrsa sign-req server server
+#  openssl dhparam -out dh2048.pem 2048
+
+#####CLIENT###########
+#./easyrsa gen-req <client> nopass
+# ./easyrsa sign-req client <client>
+#  openssl dhparam -out dh2048.pem 2048  or ./easyrsa gen-dh (didn't tried)
+
+#  vim /etc/openvpn/server.conf
+###########SERVER.CONF#######################
+#port 443    
+#proto tcp    
+#dev tun    
+#server 10.11.0.0 255.255.255.0    
+#ca /etc/openvpn/easy-rsa/keys/ca.crt    (these files paths maybe diff in your system)
+#cert /etc/openvpn/easy-rsa/keys/server.crt    
+#key /etc/openvpn/easy-rsa/keys/server.key    
+#dh /etc/openvpn/easy-rsa/keys/dh2048.pem  
+#persist-key    
+#persist-tun    
+#keepalive 10 60    
+#reneg-sec 0    
+#comp-lzo    
+#tun-mtu 1468    
+#tun-mtu-extra 32    
+#mssfix 1400    
+#push "persist-key"    
+#push "persist-tun"    
+#push "redirect-gateway def1"    
+#push "dhcp-option DNS 8.8.8.8"    
+#push "dhcp-option DNS 8.8.4.4"    
+#status /etc/openvpn/443.log    
+#verb 3    
+
+
+
+##### systemctl start openvpn@server.service 
+####   systemctl start openvpn@server.service
+
+
+## DON'T FORGET TO ENABLE PORT IN YOUR FIREWALL
+
+### vim /etc/sysctl.conf
+##### net.ipv4.ip_forward=1  ### add this
+####restart network service or do ### sysctl -p
+
+
+
+
+
+####  CLIENT SERTUP   ######
+
+## create .ovpn file in /etc/openvpn/ ####
+#client    
+#remote $serverip 443    
+#proto tcp    
+#resolv-retry infinite    
+#route-delay 2    
+#pull    
+#comp-lzo yes    
+#dev tun    
+#nobind    
+#ca ca.crt    
+#cert client.crt
+#key client.key
+
+
+####### You can also key and crts in <cat>....</ca>, <cert>....</cert>, <key>....</key>######
+
+
+
+#Start vpn client using below command##
+
+### openvpn --config <vpn>.ovpn
+
+
+## check your tunnel ip by /sbin/ifconfig    
+
+#### TADAAAAAAAAAA  <3   ####
+
+
