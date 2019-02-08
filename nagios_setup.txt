@@ -1,0 +1,5 @@
+INSTALL NAGIOS BY FOLLOWING INSTRUCTIONS ON WEB
+example : https://www.tecmint.com/install-nagios-in-linux/
+
+
+
